@@ -4,22 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
         canvas {
-            border: 1px solid black;
+            border: 1px solid #d3d3d3;
+            border-radius: 4px;
+        }
+        .wrap {
+            margin: 20px auto;
+            width: 500px;
         }
         .scrore {
-            border: 1px solid black;
+            border: 1px solid #d3d3d3;
             font-size: 18px;
-            padding: 20px;
+            padding: 10px 20px;
+            border-radius: 4px;
             margin-bottom: 20px;
             max-width: 100px;
         }
+        .panel {
+            margin-top: 20px;
+        }
+        .panel button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 2px;
+            border: 1px solid #d3d3d3;
+        }
+        .panel button + button {
+            margin-left: 8px;
+        }
     </style>
-    <title>Document</title>
+    <title>Snake game</title>
 </head>
 <body>
-    <div id="score" class="scrore"></div>
-    <canvas id="snake" width="500" height="500"></canvas>
+    <div class="wrap">
+        <div class="scrore">Счет: <span id="score"></span></div>
+        <canvas id="snake" width="500" height="500"></canvas>
+        <div class="panel">
+            <button id="start">Старт</button>
+            <button id="pause">Пауза</button>
+        </div>
+    </div>
     <script src="./game.js"></script>
 </body>
 </html>

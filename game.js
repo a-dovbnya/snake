@@ -4,13 +4,16 @@ const DIRECTIONS = {
     LEFT: 'left',
     RIGHT: 'right '      
 }
+
 const eventUpdateScore = new Event('updateScore')
+const eventGameOver = new Event('gameOver')
 
 class Snake {
     constructor (ctx) {
         if (!ctx) {
             console.error('ctx is required!')
         }
+        this.isNewGame = false
         this.ctx = ctx
         this.width = 500
         this.height = 500
@@ -21,21 +24,38 @@ class Snake {
         this.cols = Math.floor(this.width / this.size)
         this.rows = Math.floor(this.height / this.size)
 
-        this.snakeColor = 'black'
-        this.snake = [{
-            x: Math.floor(this.cols / 2) * this.size,
-            y: Math.floor(this.rows / 2) * this.size,
-            direction: this.direction
-        }]
+        this.snakeColor = '#a6c529'
+        this.snakeHeadColor = '#516a05'
+        this.snake = this.createSnake()
 
-        this.targetColor = 'red'
-        this.target = this.createTargetCoords()
+        this.targetColor = '#aa5d81'
+        this.target = this.createTarget()
 
         this.score = 0
 
-        document.addEventListener('keydown', this.setDirection.bind(this))
+        /**
+         * sounds
+         */
+        this.soundPlay = new Audio('./sound/play.mp3');
+        this.soundEvent = new Audio('./sound/success.mp3');
+        this.soundOver = new Audio('./sound/over.mp3');
 
-        this.start()
+        document.addEventListener('keydown', this.setDirection.bind(this))
+        this.drawBackground()
+        this.drawTarget()
+        this.drawSnake()
+    }
+    createSnake () {
+        return [{
+            x: Math.floor(this.cols / 2) * this.size,
+            y: Math.floor(this.rows / 2) * this.size
+        }]
+    }
+    createTarget () {
+        return {
+            x: Math.floor(Math.random() * this.cols) * this.size,
+            y: Math.floor(Math.random() * this.rows) * this.size,
+        }
     }
     /**
      * Заливает фон шахматной доской
@@ -43,98 +63,116 @@ class Snake {
     drawBackground () {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                this.ctx.fillStyle = j%2 === i%2 ? 'rgb(0,0,0,0.1)' : 'rgb(255,255,255,1)'
+                this.ctx.fillStyle = j%2 === i%2 ? 'rgb(0,0,0,0.05)' : 'rgb(255,255,255,1)'
                 this.ctx.fillRect(j * this.size, i * this.size, this.size, this.size)
             }
         }
     }
     drawTarget () {
         this.ctx.fillStyle = this.targetColor
-        this.ctx.fillRect(this.target.x, this.target.y, this.size, this.size)
+        this.drawCircle(this.target.x + this.size/2, this.target.y + this.size/2)
     }
     drawSnake () {
         for (let i = 0; i < this.snake.length; i++) {
-            
-            this.ctx.fillStyle = i === 0 ? 'blue' : this.snakeColor
-            this.ctx.fillRect(this.snake[i].x, this.snake[i].y, this.size, this.size)
+            this.ctx.fillStyle = i === 0 ? this.snakeHeadColor : this.snakeColor
+            this.drawCircle(this.snake[i].x + this.size/2, this.snake[i].y + this.size/2)
         }
     }
+    drawCircle (x, y) {
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, this.size / 2, 0, 2 * Math.PI, false);
+        this.ctx.fill();
+    }
     updateSnake () {
-        
         let x = this.snake[0].x
         let y = this.snake[0].y
 
-        if (this.direction === DIRECTIONS.LEFT) {
-            x = x - this.size
+        switch (this.direction) {
+            case DIRECTIONS.LEFT: {
+                x = x - this.size
+                break
+            }
+            case DIRECTIONS.RIGHT: {
+                x = x + this.size
+                break
+            }
+            case DIRECTIONS.TOP: {
+                y = y - this.size
+                break
+            }
+            case DIRECTIONS.BOTTOM: {
+                y = y + this.size
+                break
+            }
+            default: break
         }
-        if (this.direction === DIRECTIONS.RIGHT) {
-            x = x + this.size
-        }
-        if (this.direction === DIRECTIONS.TOP) {
-            y = y - this.size
-        }
-        if (this.direction === DIRECTIONS.BOTTOM) {
-            y = y + this.size
+
+        // Пересечение с самим собой
+        for (let i = 0; i < this.snake.length; i++) {
+            if (this.snake[i].x !== x || this.snake[i].y !== y) {
+                continue
+            }
+            // На малых скоростях при быстрой смене направления
+            // "Голова" может пойти в другую сторону
+            if (i === 1) {
+                this.snake = this.snake.reverse()
+                return
+            }
+
+            this.end()
+            return
         }
 
         // Выход за рамки поля
         if (x >= this.width) {
+            return this.end()
             x = 0
         } else if (x < 0) {
+            return this.end()
             x = this.width - this.size
         }
         if (y >= this.height) {
+            return this.end()
             y = 0
         } else if (y < 0) {
+            return this.end()
             y = this.height - this.size
         }
 
         // Пересечение с целью
         if (x === this.target.x && y === this.target.y) {
-            this.target = this.createTargetCoords()
+            this.target = this.createTarget()
             this.score++
+            this.soundEvent.play()
             document.dispatchEvent(eventUpdateScore);
         } else {
             this.snake.pop();
         }
         this.snake.unshift({x: x, y: y})
     }
-    createTargetCoords () {
-        return {
-            x: Math.floor(Math.random() * this.cols) * this.size,
-            y: Math.floor(Math.random() * this.rows) * this.size,
-        }
-    }
     setDirection (e) {
-        switch (e.code) {
-            case 'ArrowUp' : {
-                if (this.direction !== DIRECTIONS.BOTTOM) {
-                    this.direction = DIRECTIONS.TOP
-                }
-                break
-            }
-            case 'ArrowDown': {
-                if (this.direction !== DIRECTIONS.TOP) {
-                    this.direction = DIRECTIONS.BOTTOM
-                }
-                break
-            }
-            case 'ArrowRight': {
-                if (this.direction !== DIRECTIONS.LEFT) {
-                    this.direction = DIRECTIONS.RIGHT
-                }
-                break
-            }
-            case 'ArrowLeft': {
-                if (this.direction !== DIRECTIONS.RIGHT) {
-                    this.direction = DIRECTIONS.LEFT
-                }
-                break
-            }
-            default: break
+        if (e.code === 'ArrowUp' && this.direction !== DIRECTIONS.BOTTOM) {
+            return this.direction = DIRECTIONS.TOP
+        }
+        if (e.code === 'ArrowDown' && this.direction !== DIRECTIONS.TOP) {
+            return this.direction = DIRECTIONS.BOTTOM
+        }
+        if (e.code === 'ArrowRight' && this.direction !== DIRECTIONS.LEFT) {
+            return this.direction = DIRECTIONS.RIGHT
+        }
+        if (e.code === 'ArrowLeft' && this.direction !== DIRECTIONS.RIGHT) {
+            return this.direction = DIRECTIONS.LEFT
         }
     }
     start () {
+        if (this.isNewGame) {
+            this.snake = this.createSnake()
+            this.target = this.createTarget()
+            this.isNewGame = false
+            this.score = 0
+            document.dispatchEvent(eventUpdateScore);
+        }
+
         this.timer = setInterval(() => {
             this.ctx.clearRect(0, 0, this.width, this.height);
             this.updateSnake()
@@ -142,12 +180,27 @@ class Snake {
             this.drawBackground()
             this.drawTarget()
             this.drawSnake()
+
         }, this.speed)
+        this.soundPlay.play()
+    }
+    pause () {
+        clearInterval(this.timer)
+        this.timer = null
+    }
+    end () {
+        clearInterval(this.timer)
+        this.isNewGame = true
+        this.timer = null
+        this.soundOver.play()
+
+        document.dispatchEvent(eventGameOver);
     }
 }
 
 const canvas = document.getElementById('snake')
 const score = document.getElementById('score')
+const over = document.getElementById('gameOver')
 const ctx = canvas.getContext('2d')
 const snake = new Snake(ctx)
 
@@ -155,5 +208,16 @@ score.innerHTML = snake.score
 
 document.addEventListener('updateScore', () => {
     score.innerHTML = snake.score
+})
+
+document.addEventListener('gameOver', () => {
+    alert('gameOver')
+})
+
+document.getElementById('start').addEventListener('click', () => {
+    snake.start()
+})
+document.getElementById('pause').addEventListener('click', () => {
+    snake.pause()
 })
 
