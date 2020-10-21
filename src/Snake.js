@@ -1,14 +1,7 @@
-const DIRECTIONS = {
-    TOP: 'top',
-    BOTTOM: 'bottom',
-    LEFT: 'left',
-    RIGHT: 'right '      
-}
+import { DIRECTIONS } from './consts'
+import { eventUpdateScore, eventGameOver } from './events'
 
-const eventUpdateScore = new Event('updateScore')
-const eventGameOver = new Event('gameOver')
-
-class Snake {
+export default class Snake {
     constructor (ctx) {
         if (!ctx) {
             console.error('ctx is required!')
@@ -36,9 +29,9 @@ class Snake {
         /**
          * sounds
          */
-        this.soundPlay = new Audio('./sound/play.mp3');
-        this.soundEvent = new Audio('./sound/success.mp3');
-        this.soundOver = new Audio('./sound/over.mp3');
+        this.soundPlay = new Audio('./assets/sounds/play.mp3');
+        this.soundEvent = new Audio('./assets/sounds/success.mp3');
+        this.soundOver = new Audio('./assets/sounds/over.mp3');
 
         document.addEventListener('keydown', this.setDirection.bind(this))
         this.drawBackground()
@@ -125,17 +118,17 @@ class Snake {
 
         // Выход за рамки поля
         if (x >= this.width) {
-            return this.end()
+            //return this.end()
             x = 0
         } else if (x < 0) {
-            return this.end()
+            //return this.end()
             x = this.width - this.size
         }
         if (y >= this.height) {
-            return this.end()
+            //return this.end()
             y = 0
         } else if (y < 0) {
-            return this.end()
+            //return this.end()
             y = this.height - this.size
         }
 
@@ -197,27 +190,3 @@ class Snake {
         document.dispatchEvent(eventGameOver);
     }
 }
-
-const canvas = document.getElementById('snake')
-const score = document.getElementById('score')
-const over = document.getElementById('gameOver')
-const ctx = canvas.getContext('2d')
-const snake = new Snake(ctx)
-
-score.innerHTML = snake.score
-
-document.addEventListener('updateScore', () => {
-    score.innerHTML = snake.score
-})
-
-document.addEventListener('gameOver', () => {
-    alert('gameOver')
-})
-
-document.getElementById('start').addEventListener('click', () => {
-    snake.start()
-})
-document.getElementById('pause').addEventListener('click', () => {
-    snake.pause()
-})
-

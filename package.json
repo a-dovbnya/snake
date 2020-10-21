@@ -1,0 +1,15 @@
+{
+  "name": "Snake",
+  "version": "1.0.0",
+  "description": "Simple game Snake",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": "https://github.com/a-dovbnya/snake.git",
+  "author": "dovbnya <custos11@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.1.3",
+    "webpack-cli": "^4.1.0"
+  }
+}
