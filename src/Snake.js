@@ -25,6 +25,7 @@ export default class Snake {
         this.target = this.createTarget()
 
         this.score = 0
+        this.throughWalls = false
 
         /**
          * sounds
@@ -117,19 +118,14 @@ export default class Snake {
         }
 
         // Выход за рамки поля
-        if (x >= this.width) {
-            //return this.end()
-            x = 0
-        } else if (x < 0) {
-            //return this.end()
-            x = this.width - this.size
-        }
-        if (y >= this.height) {
-            //return this.end()
-            y = 0
-        } else if (y < 0) {
-            //return this.end()
-            y = this.height - this.size
+        const isOutOfZone = this.isOutOfZone(x, y)
+
+        if (isOutOfZone.x !== x || isOutOfZone.y !== y) {
+            if (!this.throughWalls) {
+                return this.end()
+            }
+            x = isOutOfZone.x
+            y = isOutOfZone.y
         }
 
         // Пересечение с целью
@@ -142,6 +138,19 @@ export default class Snake {
             this.snake.pop();
         }
         this.snake.unshift({x: x, y: y})
+    }
+    isOutOfZone (x, y) {
+        if (x >= this.width) {
+            x = 0
+        } else if (x < 0) {
+            x = this.width - this.size
+        }
+        if (y >= this.height) {
+            y = 0
+        } else if (y < 0) {
+            y = this.height - this.size
+        }
+        return {x: x, y: y}
     }
     setDirection (e) {
         if (e.code === 'ArrowUp' && this.direction !== DIRECTIONS.BOTTOM) {
