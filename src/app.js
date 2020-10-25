@@ -21,3 +21,12 @@ document.getElementById('start').addEventListener('click', () => {
 document.getElementById('pause').addEventListener('click', () => {
     snake.pause()
 })
+
+document.getElementById('change').addEventListener('click', () => {
+    if (snake.options.targetColor !== 'red') {
+        snake.options.targetColor = 'red'
+    } else {
+        snake.options.targetColor = 'blue'
+    }
+    snake.draw()
+})
