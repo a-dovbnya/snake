@@ -167,6 +167,7 @@ export default class Snake {
             this.updateSnake()
             this.draw()
         }, this.options.speed)
+
         soundPlay.play()
     }
     pause () {
@@ -177,6 +178,7 @@ export default class Snake {
         clearInterval(this.timer)
         this.isNewGame = true
         this.timer = null
+
         soundOver.play()
 
         document.dispatchEvent(eventGameOver);

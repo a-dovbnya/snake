@@ -2,6 +2,7 @@ import Snake from './Snake'
 
 const canvas = document.getElementById('snake')
 const score = document.getElementById('score')
+const over = document.querySelector('.game-over')
 const ctx = canvas.getContext('2d')
 const snake = new Snake(ctx)
 
@@ -12,10 +13,11 @@ document.addEventListener('updateScore', () => {
 })
 
 document.addEventListener('gameOver', () => {
-    alert('gameOver')
+    over.classList.add('game-over_active')
 })
 
 document.getElementById('start').addEventListener('click', () => {
+    over.classList.remove('game-over_active')
     snake.start()
 })
 document.getElementById('pause').addEventListener('click', () => {
