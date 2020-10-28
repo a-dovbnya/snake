@@ -1,4 +1,5 @@
 import Snake from './Snake'
+import '../assets/styles/app.less'
 
 const canvas = document.getElementById('snake')
 const score = document.getElementById('score')

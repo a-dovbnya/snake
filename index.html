@@ -3,64 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        canvas {
-            border: 1px solid #d3d3d3;
-            border-radius: 4px;
-        }
-        .wrap {
-            margin: 20px auto;
-            width: 502px;
-        }
-        .scrore {
-            border: 1px solid #d3d3d3;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            max-width: 140px;
-        }
-        .panel {
-            margin-top: 20px;
-        }
-        .panel button {
-            padding: 10px 20px;
-            font-size: 14px;
-            border-radius: 2px;
-            border: 1px solid #d3d3d3;
-        }
-        .panel button + button {
-            margin-left: 8px;
-        }
-        .game-area {
-            position: relative;
-        }
-        .game-over {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.5);
-            align-items: center;
-            justify-content: center;
-            display: none;
-        }
-        .game-over_active {
-            display: flex;
-        }
-        .game-over__txt {
-            font-size: 50px;
-            color: #b3b3b3;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="./dist/styles.css">
     <title>Snake game</title>
 </head>
 <body>
