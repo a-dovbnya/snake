@@ -163,6 +163,7 @@ export default class Snake {
             document.dispatchEvent(eventUpdateScore);
         }
 
+        this.stop()
         this.timer = setInterval(() => {
             this.updateSnake()
             this.draw()
@@ -170,14 +171,13 @@ export default class Snake {
 
         soundPlay.play()
     }
-    pause () {
+    stop () {
         clearInterval(this.timer)
         this.timer = null
     }
     end () {
-        clearInterval(this.timer)
+        this.stop()
         this.isNewGame = true
-        this.timer = null
 
         soundOver.play()
 
