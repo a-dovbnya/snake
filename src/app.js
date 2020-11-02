@@ -21,11 +21,11 @@ document.getElementById('start').addEventListener('click', () => {
     over.classList.remove('game-over_active')
     snake.start()
 })
-document.getElementById('pause').addEventListener('click', () => {
+/*document.getElementById('pause').addEventListener('click', () => {
     snake.stop()
 })
 
-/*document.getElementById('change').addEventListener('click', () => {
+document.getElementById('change').addEventListener('click', () => {
     if (snake.options.targetColor !== 'red') {
         snake.options.targetColor = 'red'
     } else {

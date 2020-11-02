@@ -1,11 +1,15 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = {
-    entry: './src/app.js',
+    entry: {
+      app: './src/app.js',
+      images: './src/svg-images-import.js'
+    },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'game.bundle.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [
@@ -18,9 +22,36 @@ module.exports = {
           ]
           
         },
+        /* sprite */
+        {
+          test: /assets\/img\/icons\/.*\.svg$/,
+          use: [
+              {
+                  loader: 'svg-sprite-loader',
+                  options: {
+                      extract: true,
+                      spriteFilename: 'svg-sprite.svg',
+                      outputPath: '/'
+                  }
+              },
+              {
+                  loader: 'svgo-loader',
+                  options: {
+                    plugins: [
+                      { removeAttrs: { attrs: '(fill|stroke)' } },
+                    ]
+                  }
+              }
+          ]
+        }
       ],
     },
-    plugins: [new MiniCssExtractPlugin({
-      filename: 'styles.css'
-    })],
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'styles.css'
+      }),
+      new SpriteLoaderPlugin({
+        plainSprite: true
+      })
+    ],
 };

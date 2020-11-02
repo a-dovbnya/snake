@@ -16,13 +16,24 @@ canvas {
     margin: 20px auto;
     width: 502px;
 }
-.scrore {
-    border: 1px solid @bord;
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 4px;
+.top-panel {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
-    max-width: 140px;
+    height: 42px;
+
+    &__score {
+        border: 1px solid @bord;
+        color: @overTxt;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        max-width: 140px;
+    }
+    &__buttons {
+        margin-left: 15px;
+        display: flex;
+    }
 }
 .panel {
     margin-top: 20px;
@@ -58,5 +69,38 @@ canvas {
 
     &_active {
         display: flex; 
+    }
+}
+
+.circle-btn {
+    border-radius: 50%;
+    border: 1px solid @bord;
+    color: @overTxt;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .25s ease;
+
+    &:hover {
+        color: #84bbf5;
+        border-color: #c6e2ff;
+        background-color: #ecf5ff;
+    }
+
+    &:active {
+        border-color: #c6e2ff;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
+    & + & {
+        margin-left: 10px;
     }
 }

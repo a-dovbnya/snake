@@ -8,7 +8,21 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="scrore">Счет: <span id="score"></span></div>
+        <div class="top-panel">
+            <div class="top-panel__score">Счет: <span id="score"></span></div>
+            <div class="top-panel__buttons">
+                <div class="circle-btn">
+                    <svg>
+                        <use xlink:href="./dist/svg-sprite.svg#settings" />
+                    </svg>
+                </div>
+                <div class="circle-btn">
+                    <svg>
+                        <use xlink:href="./dist/svg-sprite.svg#speaker" />
+                    </svg>
+                </div>
+            </div>
+        </div>
         <div class="game-area">
             <canvas id="snake" width="500" height="500"></canvas>
             <div class="game-over">
@@ -21,6 +35,6 @@
             <button id="change">Change target color</button>-->
         </div>
     </div>
-    <script src="./dist/game.bundle.js"></script>
+    <script src="./dist/app.bundle.js"></script>
 </body>
 </html>
