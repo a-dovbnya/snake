@@ -21,6 +21,13 @@ document.getElementById('start').addEventListener('click', () => {
     over.classList.remove('game-over_active')
     snake.start()
 })
+
+document.getElementById('setting-btn').addEventListener('click', () => {
+    document.querySelector('.popup').classList.add('popup__active')
+})
+document.querySelector('.popup__close').addEventListener('click', () => {
+    document.querySelector('.popup').classList.remove('popup__active')
+})
 /*document.getElementById('pause').addEventListener('click', () => {
     snake.stop()
 })

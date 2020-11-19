@@ -11,16 +11,16 @@
         <div class="top-panel">
             <div class="top-panel__score">Счет: <span id="score"></span></div>
             <div class="top-panel__buttons">
-                <div class="circle-btn">
+                <button id="setting-btn" class="btn btn_circle">
                     <svg>
                         <use xlink:href="./dist/svg-sprite.svg#settings" />
                     </svg>
-                </div>
-                <div class="circle-btn">
+                </button>
+                <button class="btn btn_circle">
                     <svg>
                         <use xlink:href="./dist/svg-sprite.svg#speaker" />
                     </svg>
-                </div>
+                </button>
             </div>
         </div>
         <div class="game-area">
@@ -30,9 +30,23 @@
             </div>
         </div>
         <div class="panel">
-            <button id="start">Старт</button>
+            <button class="btn" id="start">Старт</button>
             <!--<button id="pause">Пауза</button>
             <button id="change">Change target color</button>-->
+        </div>
+    </div>
+
+    <div class="popup">
+        <a href="javascript:void(0)" class="popup__close"></a>
+        <div class="popup__inner">
+            <div class="popup__col">
+                <div class="demo-game">
+                    <h1>POPUP</h1>
+                </div>
+            </div>
+            <div class="popup__col">
+
+            </div>
         </div>
     </div>
     <script src="./dist/app.bundle.js"></script>
