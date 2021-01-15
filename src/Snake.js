@@ -1,6 +1,6 @@
-import { DIRECTIONS, DEFAULTS } from './consts'
+import { DIRECTIONS, DEFAULTS, SOUND_TYPES } from './consts'
 import { eventUpdateScore, eventGameOver } from './events'
-import { soundPlay, soundEvent, soundOver } from './sounds'
+import { SOUNDS } from './sounds'
 
 export default class Snake {
     constructor (ctx, options={}) {
@@ -123,8 +123,8 @@ export default class Snake {
         if (x === this.target.x && y === this.target.y) {
             this.target = this.createTarget()
             this.score++
-            soundEvent.play()
-            document.dispatchEvent(eventUpdateScore);
+            this.soundPlay(SOUND_TYPES.EVENT)
+            document.dispatchEvent(eventUpdateScore)
         } else {
             this.snake.pop();
         }
@@ -169,7 +169,7 @@ export default class Snake {
             this.draw()
         }, this.options.speed)
 
-        soundPlay.play()
+        this.soundPlay(SOUND_TYPES.PLAY)
     }
     stop () {
         clearInterval(this.timer)
@@ -179,8 +179,13 @@ export default class Snake {
         this.stop()
         this.isNewGame = true
 
-        soundOver.play()
+        this.soundPlay(SOUND_TYPES.OVER)
 
         document.dispatchEvent(eventGameOver);
+    }
+    soundPlay (sound) {
+        if (this.options.sound && SOUNDS[sound]) {
+            SOUNDS[sound].play()
+        }
     }
 }

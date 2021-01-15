@@ -1,7 +1,10 @@
-import Snake from './Snake'
+//import Snake from './Snake'
+import Game from './Game'
 import '../assets/styles/app.less'
 
-const canvas = document.getElementById('snake')
+new Game()
+
+/*const canvas = document.getElementById('snake')
 const score = document.getElementById('score')
 const over = document.querySelector('.game-over')
 const ctx = canvas.getContext('2d')
@@ -27,7 +30,9 @@ document.getElementById('setting-btn').addEventListener('click', () => {
 })
 document.querySelector('.popup__close').addEventListener('click', () => {
     document.querySelector('.popup').classList.remove('popup__active')
-})
+})*/
+
+
 /*document.getElementById('pause').addEventListener('click', () => {
     snake.stop()
 })

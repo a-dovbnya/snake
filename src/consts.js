@@ -5,6 +5,12 @@ export const DIRECTIONS = {
     RIGHT: 'right '      
 }
 
+export const SOUND_TYPES = {
+    PLAY: 'PLAY',
+    EVENT: 'EVENT',
+    OVER: 'OVER'
+}
+
 export const DEFAULTS = {
     width: 500,
     height: 500,
@@ -13,5 +19,6 @@ export const DEFAULTS = {
     throughWalls: false,
     snakeColor: '#a6c529',
     snakeHeadColor: '#516a05',
-    targetColor: '#aa5d81'
+    targetColor: '#aa5d81',
+    sound: true
 }

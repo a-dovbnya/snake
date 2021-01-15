@@ -16,7 +16,7 @@
                         <use xlink:href="./dist/svg-sprite.svg#settings" />
                     </svg>
                 </button>
-                <button class="btn btn_circle">
+                <button id="sound-btn" class="btn btn_circle">
                     <svg>
                         <use xlink:href="./dist/svg-sprite.svg#speaker" />
                     </svg>
@@ -38,7 +38,7 @@
 
     <div class="popup">
         <a href="javascript:void(0)" class="popup__close"></a>
-        <div class="popup__inner">
+        <!--<div class="popup__inner">
             <div class="popup__col">
                 <div class="demo-game">
                     <h1>POPUP</h1>
@@ -46,6 +46,11 @@
             </div>
             <div class="popup__col">
 
+            </div>
+        </div>-->
+        <div class="wrap wrap_demo">
+            <div class="game-area">
+                <canvas id="snake-demo" width="500" height="500"></canvas>
             </div>
         </div>
     </div>

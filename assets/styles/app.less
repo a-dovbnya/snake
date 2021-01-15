@@ -16,6 +16,10 @@ canvas {
 .wrap {
     margin: 20px auto;
     width: 502px;
+
+    &_demo {
+        padding-top: 62px;
+    }
 }
 .top-panel {
     display: flex;
@@ -83,7 +87,7 @@ canvas {
     padding: 10px 20px;
     cursor: pointer;
     outline: none !important;
-    transition: .25s ease;
+    transition: border .25s ease, background .25s ease;
 
     &:hover {
         color: #84bbf5;
@@ -112,6 +116,29 @@ canvas {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    &_stroke {
+        position: relative;
+        opacity: .5;
+
+        &::before, &::after {
+            content: '';
+            height: 40px;
+            width: 1px;
+            background: @bord;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        &::before {
+            transform: rotate(45deg);
+        }
+        &::after {
+            transform: rotate(-45deg); 
+        }
     }
 }
 
