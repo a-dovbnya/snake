@@ -18,7 +18,7 @@ export default class Game {
         // Init events
         d.addEventListener('updateScore', this.setScore.bind(this))
         d.addEventListener('gameOver', this.showOver.bind(this))
-        this.toggleBtn.addEventListener('click', this.hideOver.bind(this))
+        this.toggleBtn.addEventListener('click', this.toggleGame.bind(this))
         this.soundBtn.addEventListener('click', this.toggleSound.bind(this))
         d.getElementById('setting-btn').addEventListener('click', this.showPopup.bind(this))
         d.querySelector('.popup__close').addEventListener('click', this.hidePopup.bind(this))
@@ -29,11 +29,17 @@ export default class Game {
     }
     showOver () {
         this.over.classList.add('game-over_active')
+        this.toggleBtn.innerHTML = "Старт"
     }
-    hideOver () {
-        console.log('hideOver', this)
-        this.over.classList.remove('game-over_active')
-        this.snake.start()
+    toggleGame () {
+        if (!this.snake.isStarted) {
+            this.over.classList.remove('game-over_active')
+            this.snake.start()
+            this.toggleBtn.innerHTML = "Пауза"
+        } else {
+            this.snake.stop()
+            this.toggleBtn.innerHTML = "Продолжить"
+        }
     }
     showPopup () {
         d.querySelector('.popup').classList.add('popup__active')
@@ -44,6 +50,5 @@ export default class Game {
     toggleSound () {
         this.soundBtn.classList.toggle('btn_stroke')
         this.snake.options.sound = !this.snake.options.sound
-        console.log(this.snake.options)
     }
 }

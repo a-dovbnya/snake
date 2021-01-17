@@ -10,6 +10,7 @@ export default class Snake {
 
         this.ctx = ctx
         this.options = Object.assign({}, DEFAULTS, options)
+        this.isStarted = false
 
         this.cols = Math.floor(this.options.width / this.options.size)
         this.rows = Math.floor(this.options.height / this.options.size)
@@ -168,16 +169,19 @@ export default class Snake {
             this.updateSnake()
             this.draw()
         }, this.options.speed)
+        this.isStarted = true
 
         this.soundPlay(SOUND_TYPES.PLAY)
     }
     stop () {
         clearInterval(this.timer)
         this.timer = null
+        this.isStarted = false
     }
     end () {
         this.stop()
         this.isNewGame = true
+        this.isStarted = false
 
         this.soundPlay(SOUND_TYPES.OVER)
 
