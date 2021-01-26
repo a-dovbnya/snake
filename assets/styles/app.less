@@ -16,6 +16,7 @@ canvas {
 .wrap {
     margin: 20px auto;
     width: 502px;
+    position: relative;
 
     &_demo {
         padding-top: 62px;
@@ -185,5 +186,29 @@ canvas {
         opacity: 1;
         overflow: visible;
         transform: translate3d(0, 0, 0);
+    }
+}
+
+.settings {
+    position: absolute;
+    border: 1px solid @bord;
+    border-radius: 4px;
+    width: 300px;
+    min-height: 300px;
+    top: 64px;
+    left: calc(~"100% + 24px");
+    padding: 16px 0;
+
+    &__row {
+        margin-top: 16px;
+        padding: 0 16px;
+
+        &:nth-child(1) {
+            margin-top: 0;
+        }
+    }
+    &__label {
+        color: #383838;
+        margin-bottom: 4px;
     }
 }
